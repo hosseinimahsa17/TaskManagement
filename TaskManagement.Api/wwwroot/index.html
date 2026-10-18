@@ -1,0 +1,673 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مدیریت وظایف</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jalaali-js/dist/jalaali.js"></script>
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="logo-area">
+            تسک‌من
+        </div>
+        <div class="header-right-side">
+            <!-- دکمه ثبت خواب -->
+            <div class="sleep-widget-btn" onclick="openSleepModal()">
+                <span class="sleep-icon">🌙</span>
+                <span class="sleep-text">خواب</span>
+            </div>
+
+            <!-- ویجت تقویم -->
+            <div class="date-widget">
+                <span id="headerDate">۱۴۰۵/۰۷/۲۶</span>
+                <span class="separator">|</span>
+                <span id="headerDay">یکشنبه</span>
+                <span class="calendar-icon">📅</span>
+            </div>
+            <!-- دکمه تم -->
+            <div class="header-controls">
+                <button id="themeToggle" onclick="toggleTheme()">حالت تاریک</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-wrapper">
+        <div class="sidebar">
+            <ul>
+                <li class="active" data-filter="all" onclick="filterTasks('all')">داشبورد</li>
+                <li data-filter="all" onclick="filterTasks('all')">همه تسک‌ها</li>
+                <li data-filter="completed" onclick="filterTasks('completed')">انجام شده‌ها</li>
+                <li data-filter="pending" onclick="filterTasks('pending')">در انتظار</li>
+                <li onclick="toggleSettings()">تنظیمات</li>
+            </ul>
+        </div>
+
+        <div class="content-area">
+            <div class="container">
+
+                <!-- بخش دسته‌بندی‌ها (دنیای من) -->
+                <h1>دنیای من</h1>
+                <div class="categories-grid">
+                    <div class="category-card" onclick="showCategory('students')">
+                        <div class="category-cover" style="background: linear-gradient(45deg, #4a90e2, #357abd);"></div>
+                        <div class="category-info">
+                            <h3>🎓 دانشجویان</h3>
+                            <p>منابع، جزوات و برنامه‌ریزی</p>
+                        </div>
+                    </div>
+                    <div class="category-card" onclick="showCategory('homemakers')">
+                        <div class="category-cover" style="background: linear-gradient(45deg, #f59e0b, #d97706);"></div>
+                        <div class="category-info">
+                            <h3>🏠 خانه‌دارها</h3>
+                            <p>مدیریت خانه و خانواده</p>
+                        </div>
+                    </div>
+                    <div class="category-card" onclick="showCategory('worship')">
+                        <div class="category-cover" style="background: linear-gradient(45deg, #10b981, #059669);"></div>
+                        <div class="category-info">
+                            <h3>🕌 روتین بندگی</h3>
+                            <p>قرآن، نماز و ادعیه</p>
+                        </div>
+                    </div>
+                    <div class="category-card" onclick="showCategory('sports')">
+                        <div class="category-cover" style="background: linear-gradient(45deg, #ef4444, #dc2626);"></div>
+                        <div class="category-info">
+                            <h3>🏋️‍♂️ ورزش و باشگاه</h3>
+                            <p>تمرینات و برنامه غذایی</p>
+                        </div>
+                    </div>
+                    <div class="category-card" onclick="showCategory('students')">
+                        <div class="category-cover" style="background: linear-gradient(45deg, #8b5cf6, #7c3aed);"></div>
+                        <div class="category-info">
+                            <h3>🎒 دانش‌آموزان</h3>
+                            <p>درس، بازی و سرگرمی</p>
+                        </div>
+                    </div>
+                    <div class="category-card" onclick="showCategory('health')">
+                        <div class="category-cover" style="background: linear-gradient(45deg, #06b6d4, #0891b2);"></div>
+                        <div class="category-info">
+                            <h3>🥗 سبک زندگی سالم</h3>
+                            <p>تغذیه و سلامت</p>
+                        </div>
+                    </div>
+                    <div class="category-card" onclick="showCategory('quran')">
+                        <div class="category-cover" style="background: linear-gradient(45deg, #14b8a6, #0d9488);"></div>
+                        <div class="category-info">
+                            <h3>📖 قرآن کریم</h3>
+                            <p>قرائت، تفسیر و حفظ</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-panel" id="settingsPanel">
+                    <h2>تنظیمات ظاهری</h2>
+                    <div class="setting-item">
+                        <span>تغییر تم</span>
+                        <button class="header-controls button" onclick="toggleTheme()">تغییر حالت روز/شب</button>
+                    </div>
+                    <div class="setting-item">
+                        <span>رنگ اصلی برنامه</span>
+                        <div class="color-picker">
+                            <div class="color-btn" style="background:#4a90e2;" onclick="changeColor('#4a90e2', '#357abd')"></div>
+                            <div class="color-btn" style="background:#10b981;" onclick="changeColor('#10b981', '#059669')"></div>
+                            <div class="color-btn" style="background:#8b5cf6;" onclick="changeColor('#8b5cf6', '#7c3aed')"></div>
+                            <div class="color-btn" style="background:#ef4444;" onclick="changeColor('#ef4444', '#dc2626')"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h1>لیست وظایف من</h1>
+
+                <div class="card">
+                    <div class="input-group">
+                        <input type="text" id="taskTitle" placeholder="عنوان تسک جدید..." />
+                        <button class="add-btn" onclick="addTask()">افزودن</button>
+                    </div>
+
+                    <!-- ویجت استریک (زنجیره عادت) -->
+                    <div class="streak-widget">
+                        <div class="streak-icon">🔥</div>
+                        <div class="streak-text">
+                            <span id="streakCount">۰</span> روز پیوسته
+                        </div>
+                        <div class="streak-subtext">ثبت عادت‌ها</div>
+                    </div>
+
+                    <div class="stats-container">
+                        <div class="stat-item">کل: <span id="totalCount">0</span></div>
+                        <div class="stat-item">انجام شده: <span id="completedCount">0</span></div>
+                        <div class="stat-item">در انتظار: <span id="pendingCount">0</span></div>
+                        <!-- بخش هدف روزانه -->
+                        <div class="stat-item target-item">هدف امروز: <span id="dailyTarget">0/5</span></div>
+                    </div>
+                    <ul id="taskList"></ul>
+                </div>
+
+                <div class="pomodoro-card">
+                    <h2>تایمر پومودورو</h2>
+                    <p>۲۵ دقیقه تمرکز بدون وقفه</p>
+                    <div class="timer-display" id="timer">25:00</div>
+                    <div class="timer-controls">
+                        <button class="pomo-start" id="startBtn" onclick="startTimer()">شروع</button>
+                        <button class="pomo-reset" onclick="resetTimer()">ریست</button>
+                    </div>
+                </div>
+
+                <!-- بخش تقویم و نمودار -->
+                <div class="dashboard-grid">
+                    <!-- کارت تقویم -->
+                    <div class="calendar-card">
+                        <div class="calendar-header">
+                            <button onclick="changeMonth(-1)">‹</button>
+                            <h2 id="calendarMonthTitle">ماه جاری</h2>
+                            <button onclick="changeMonth(1)">›</button>
+                        </div>
+                        <div id="calendar-container"></div>
+                    </div>
+
+                    <!-- کارت دفترچه بولت ژورنال -->
+                    <div class="highlights-card">
+                        <h2>✒️ مهم‌ترین‌های ماه</h2>
+                        <ul id="highlightsList" class="bullet-list">
+                            <!-- با جاوااسکریپت پر می‌شه -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- کارت نمودار (فقط یکی) -->
+                <div class="chart-card">
+                    <h2>📊 نمودار فعالیت</h2>
+                    <div class="chart-container" style="position: relative; height:300px; width:100%;">
+                        <canvas id="activityChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal برای نمایش زیردسته‌ها (فصل‌ها/رشته‌ها) -->
+    <div id="subCategoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">عنوان دسته</h2>
+            <div id="modalBody" class="modal-body">
+                <!-- محتوا به صورت داینامیک اینجا قرار می‌گیره -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal ثبت خواب -->
+    <div id="sleepModal" class="modal">
+        <div class="modal-content sleep-modal-content">
+            <button class="close-modal" onclick="closeSleepModal()">&times;</button>
+            <h2>ثبت خواب</h2>
+            <p class="sleep-date" id="sleepDate">۲۶ مهر ۱۴۰۵</p>
+
+            <div class="sleep-record-box">
+                <div class="sleep-record-header">
+                    <span>ساعت ۸</span>
+                    <span id="sleepDuration">۱۱:۵۰ - ۱۹:۵۰</span>
+                </div>
+                <div class="sleep-times">
+                    <div class="time-input-group">
+                        <label>خوابیدم</label>
+                        <div class="time-display">
+                            <span id="sleepStartHour">۱۱</span> : <span id="sleepStartMin">۵۰</span>
+                        </div>
+                    </div>
+                    <div class="time-input-group">
+                        <label>بیدار شدم</label>
+                        <div class="time-display">
+                            <span id="sleepEndHour">۱۹</span> : <span id="sleepEndMin">۵۰</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sleep-quality">
+                    <label>این خواب چطور بود؟</label>
+                    <div class="quality-buttons">
+                        <button onclick="setSleepQuality('bad')" id="qBad">بد</button>
+                        <button onclick="setSleepQuality('ok')" id="qOk" class="active">معمولی</button>
+                        <button onclick="setSleepQuality('good')" id="qGood">خوب</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="add-sleep-record-btn" onclick="addSleepRecord()">+ افزودن بازه دیگر</button>
+
+            <div class="total-sleep-box">
+                <span>مجموع خواب</span>
+                <span id="totalSleepText">ساعت ۸</span>
+            </div>
+
+            <button class="submit-sleep-btn" onclick="submitSleep()">ثبت خواب</button>
+            <p class="no-sleep-text" onclick="submitSleep()">این روز اصلاً نخوابیدم</p>
+        </div>
+    </div>
+
+    <script>
+                const apiUrl = '/api/tasks';
+                let currentFilter = 'all';
+                let currentCalendarDate = new Date();
+                let activityChart = null;
+
+                // --- تنظیمات تم و رنگ ---
+                function toggleTheme() {
+                    const body = document.body;
+                    if (body.getAttribute('data-theme') === 'dark') {
+                        body.removeAttribute('data-theme');
+                        document.getElementById('themeToggle').innerText = 'حالت تاریک';
+                    } else {
+                        body.setAttribute('data-theme', 'dark');
+                        document.getElementById('themeToggle').innerText = 'حالت روشن';
+                    }
+                    if (activityChart) updateCalendarAndChart();
+                }
+
+                function toggleSettings() {
+                    const panel = document.getElementById('settingsPanel');
+                    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+                }
+
+                function changeColor(primary, hover) {
+                    document.documentElement.style.setProperty('--primary-color', primary);
+                    document.documentElement.style.setProperty('--primary-hover', hover);
+                    if (activityChart) {
+                        updateCalendarAndChart();
+                    }
+                }
+
+                // --- توابع تسک‌ها ---
+                async function fetchTasks() {
+                    const response = await fetch(apiUrl);
+                    let allTasks = await response.json();
+                    const list = document.getElementById('taskList');
+                    list.innerHTML = '';
+
+                    document.getElementById('totalCount').innerText = allTasks.length;
+                    document.getElementById('completedCount').innerText = allTasks.filter(t => t.isCompleted).length;
+                    document.getElementById('pendingCount').innerText = allTasks.filter(t => !t.isCompleted).length;
+
+                    // محاسبه هدف روزانه
+                    const todayStr = new Date().toISOString().split('T')[0];
+                    const completedToday = allTasks.filter(t => t.isCompleted && t.createdAt && t.createdAt.split('T')[0] === todayStr).length;
+                    document.getElementById('dailyTarget').innerText = `${completedToday}/5`;
+
+                    // --- آپدیت استریک ---
+                    try {
+                        const streakResponse = await fetch(`${apiUrl}/streak`);
+                        const streak = await streakResponse.json();
+                        document.getElementById('streakCount').innerText = streak;
+                    } catch (error) {
+                        console.error("خطا در دریافت استریک:", error);
+                    }
+
+                    let tasks = allTasks;
+                    if (currentFilter === 'completed') tasks = tasks.filter(task => task.isCompleted);
+                    else if (currentFilter === 'pending') tasks = tasks.filter(task => !task.isCompleted);
+
+                    if (tasks.length === 0) {
+                        list.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:20px;">هیچ تسکی وجود ندارد</p>`;
+                        return;
+                    }
+
+                    tasks.forEach(task => {
+                        const li = document.createElement('li');
+                        if (task.isCompleted) li.classList.add('completed');
+                        li.innerHTML = `
+                            <span class="task-title">${task.title}</span>
+                            <div class="actions">
+                                <button class="btn-toggle" onclick="toggleTask(${task.id}, ${task.isCompleted})">
+                                    ${task.isCompleted ? 'برگردوندن' : 'انجام شد'}
+                                </button>
+                                <button class="btn-delete" onclick="deleteTask(${task.id})">حذف</button>
+                            </div>
+                        `;
+                        list.appendChild(li);
+                    });
+                }
+
+                function filterTasks(filter) {
+                    currentFilter = filter;
+                    document.querySelectorAll('.sidebar ul li').forEach(li => {
+                        li.classList.remove('active');
+                        if (li.getAttribute('data-filter') === filter) li.classList.add('active');
+                    });
+                    fetchTasks();
+                }
+
+                async function addTask() {
+                    const title = document.getElementById('taskTitle').value;
+                    if (!title) return alert('عنوان تسک را وارد کن!');
+                    await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ title: title, description: '' })
+                    });
+                    document.getElementById('taskTitle').value = '';
+                    fetchTasks();
+                    updateCalendarAndChart();
+                }
+
+                async function toggleTask(id, isCompleted) {
+                    const response = await fetch(`${apiUrl}/${id}`);
+                    const task = await response.json();
+                    await fetch(`${apiUrl}/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ title: task.title, description: task.description, isCompleted: !isCompleted })
+                    });
+                    fetchTasks();
+                    updateCalendarAndChart();
+                }
+
+                async function deleteTask(id) {
+                    if (confirm('آیا از حذف مطمئن هستید؟')) {
+                        await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+                        fetchTasks();
+                        updateCalendarAndChart();
+                    }
+                }
+
+                // --- کدهای پومودورو ---
+                let timeLeft = 25 * 60;
+                let timerInterval;
+                let isRunning = false;
+
+                function updateTimerDisplay() {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    document.getElementById('timer').innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+
+                function startTimer() {
+                    if (isRunning) return;
+                    isRunning = true;
+                    document.getElementById('startBtn').innerText = 'در حال اجرا...';
+                    timerInterval = setInterval(() => {
+                        if (timeLeft <= 0) {
+                            clearInterval(timerInterval);
+                            isRunning = false;
+                            document.getElementById('startBtn').innerText = 'شروع';
+                            alert('وقت استراحت شده است.');
+                            resetTimer();
+                            return;
+                        }
+                        timeLeft--;
+                        updateTimerDisplay();
+                    }, 1000);
+                }
+
+                function resetTimer() {
+                    clearInterval(timerInterval);
+                    isRunning = false;
+                    timeLeft = 25 * 60;
+                    updateTimerDisplay();
+                    document.getElementById('startBtn').innerText = 'شروع';
+                }
+
+                // --- آپدیت تاریخ هدر ---
+                function updateHeaderDate() {
+                    const today = new Date();
+                    const jDate = jalaali.toJalaali(today.getFullYear(), today.getMonth() + 1, today.getDate());
+
+                    const formattedDate = `${jDate.jy}/${String(jDate.jm).padStart(2, '0')}/${String(jDate.jd).padStart(2, '0')}`;
+
+                    const daysOfWeek = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه'];
+                    const dayOfWeek = daysOfWeek[today.getDay()];
+
+                    document.getElementById('headerDate').innerText = formattedDate;
+                    document.getElementById('headerDay').innerText = dayOfWeek;
+                }
+
+                // --- تقویم و نمودار ---
+                async function updateCalendarAndChart() {
+                    try {
+                        const response = await fetch(`${apiUrl}/daily-summary`);
+                        const dailyData = await response.json();
+                        const dataMap = {};
+                        dailyData.forEach(day => {
+                            dataMap[day.date] = day;
+                        });
+
+                        // --- رسم تقویم شمسی (کارتی) ---
+                        const container = document.getElementById('calendar-container');
+                        container.innerHTML = '';
+
+                        const gy = currentCalendarDate.getFullYear();
+                        const gm = currentCalendarDate.getMonth() + 1;
+                        const gd = 1;
+
+                        const jDate = jalaali.toJalaali(gy, gm, gd);
+                        const jYear = jDate.jy;
+                        const jMonth = jDate.jm;
+
+                        const persianMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+                        document.getElementById('calendarMonthTitle').innerText = `${persianMonths[jMonth - 1]} ${jYear}`;
+
+                        // هدر روزهای هفته
+                        const daysOfWeek = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'];
+                        daysOfWeek.forEach(day => {
+                            const headerDiv = document.createElement('div');
+                            headerDiv.className = 'calendar-weekday';
+                            headerDiv.innerText = day;
+                            container.appendChild(headerDiv);
+                        });
+
+                        const firstDayJalali = jalaali.toGregorian(jYear, jMonth, 1);
+                        const firstDayDate = new Date(firstDayJalali.gy, firstDayJalali.gm - 1, firstDayJalali.gd);
+                        const startDayOfWeek = (firstDayDate.getDay() + 1) % 7;
+                        const daysInMonth = jalaali.jalaaliMonthLength(jYear, jMonth);
+
+                        // روزهای خالی اول ماه
+                        for (let i = 0; i < startDayOfWeek; i++) {
+                            const emptyDiv = document.createElement('div');
+                            emptyDiv.className = 'calendar-day empty';
+                            container.appendChild(emptyDiv);
+                        }
+
+                        // روزهای ماه
+                        for (let d = 1; d <= daysInMonth; d++) {
+                            const gDate = jalaali.toGregorian(jYear, jMonth, d);
+                            const dateStr = `${gDate.gy}-${String(gDate.gm).padStart(2, '0')}-${String(gDate.gd).padStart(2, '0')}`;
+                            const dayData = dataMap[dateStr];
+
+                            const dayDiv = document.createElement('div');
+                            dayDiv.className = 'calendar-day';
+                            dayDiv.innerText = d;
+
+                            const currentDate = new Date(gDate.gy, gDate.gm - 1, gDate.gd);
+                            const dayOfWeek = (currentDate.getDay() + 1) % 7;
+
+                            if (dayOfWeek === 6) {
+                                dayDiv.classList.add('friday');
+                            }
+
+                            if (dayData && dayData.totalTasks > 0) {
+                                let level = Math.min(5, Math.ceil(dayData.totalTasks / 2));
+                                dayDiv.classList.add(`day-active-${level}`);
+                                dayDiv.title = `${dayData.totalTasks} تسک`;
+                            }
+                            container.appendChild(dayDiv);
+                        }
+
+                        // --- پر کردن دفترچه بولت ژورنال (تسک‌های امروز) ---
+                        const highlightsList = document.getElementById('highlightsList');
+                        highlightsList.innerHTML = '';
+
+                        const now = new Date();
+                        const todayStrForTasks = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+                        const allTasksResponse = await fetch(apiUrl);
+                        const allTasksFull = await allTasksResponse.json();
+
+                        const todaysTasksList = allTasksFull.filter(t => {
+                            if (!t.createdAt) return false;
+                            const taskDate = t.createdAt.split('T')[0];
+                            return taskDate === todayStrForTasks;
+                        });
+
+                        if (todaysTasksList.length === 0) {
+                            highlightsList.innerHTML = '<li style="justify-content:center; border:none;">هنوز تسکی برای امروز ثبت نکردی 🌱</li>';
+                        } else {
+                            todaysTasksList.forEach(task => {
+                                const li = document.createElement('li');
+                                const bulletClass = task.isCompleted ? 'bullet filled' : 'bullet';
+                                const textClass = task.isCompleted ? 'task-text done' : 'task-text';
+
+                                li.innerHTML = `
+                                    <span class="${bulletClass}"></span>
+                                    <span class="${textClass}">${task.title}</span>
+                                `;
+                                highlightsList.appendChild(li);
+                            });
+                        }
+
+                        // --- رسم نمودار دایره‌ای (Doughnut) ---
+                        let totalTasks = 0;
+                        let completedTasks = 0;
+                        dailyData.forEach(day => {
+                            totalTasks += day.totalTasks;
+                            completedTasks += day.completedTasks;
+                        });
+                        const pendingTasks = totalTasks - completedTasks;
+
+                        const ctx = document.getElementById('activityChart').getContext('2d');
+                        if (activityChart) activityChart.destroy();
+
+                        const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim() || '#4a90e2';
+
+                        activityChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['انجام شده', 'در انتظار'],
+                                datasets: [{
+                                    data: [completedTasks, pendingTasks],
+                                    backgroundColor: [
+                                        primaryColor,
+                                        '#e5e7eb'
+                                    ],
+                                    borderWidth: 0,
+                                    hoverOffset: 4
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '75%',
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom',
+                                        labels: { font: { family: 'Vazirmatn' } }
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: (context) => ` ${context.label}: ${context.raw} تسک`
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+                    } catch (error) {
+                        console.error("خطا در بارگذاری تقویم و نمودار:", error);
+                    }
+                }
+
+                function changeMonth(offset) {
+                    currentCalendarDate.setMonth(currentCalendarDate.getMonth() + offset);
+                    updateCalendarAndChart();
+                }
+
+                // --- مدیریت دسته‌بندی‌ها و مودال ---
+                function showCategory(category) {
+                    const modal = document.getElementById('subCategoryModal');
+                    const title = document.getElementById('modalTitle');
+                    const body = document.getElementById('modalBody');
+
+                    if (category === 'students') {
+                        title.innerText = '🎓 دانشجویان - انتخاب گروه تحصیلی';
+                        body.innerHTML = `
+                            <button class="modal-sub-btn" onclick="alert('مهندسی کامپیوتر انتخاب شد')">💻 فنی و مهندسی</button>
+                            <button class="modal-sub-btn" onclick="alert('پزشکی انتخاب شد')">🩺 علوم پزشکی</button>
+                            <button class="modal-sub-btn" onclick="alert('حقوق انتخاب شد')">📚 علوم انسانی</button>
+                            <button class="modal-sub-btn" onclick="alert('گرافیک انتخاب شد')">🎨 هنر</button>
+                        `;
+                    } else if (category === 'worship') {
+                        title.innerText = '🕌 روتین بندگی - انتخاب فصل';
+                        body.innerHTML = `
+                            <button class="modal-sub-btn" onclick="alert('فصل بهار انتخاب شد')">🌸 فصل بهار</button>
+                            <button class="modal-sub-btn" onclick="alert('فصل تابستان انتخاب شد')">☀️ فصل تابستان</button>
+                            <button class="modal-sub-btn" onclick="alert('فصل پاییز انتخاب شد')">🍂 فصل پاییز</button>
+                            <button class="modal-sub-btn" onclick="alert('فصل زمستان انتخاب شد')">❄️ فصل زمستان</button>
+                            <button class="modal-sub-btn" onclick="alert('ماه رمضان انتخاب شد')">🌙 ماه رمضان</button>
+                        `;
+                    } else {
+                        title.innerText = 'به زودی...';
+                        body.innerHTML = '<p style="color:var(--text-muted)">محتوای این بخش در حال آماده‌سازی است.</p>';
+                    }
+
+                    modal.style.display = 'block';
+                }
+
+                function closeModal() {
+                    document.getElementById('subCategoryModal').style.display = 'none';
+                }
+
+                // --- مدیریت مدال خواب ---
+                function openSleepModal() {
+                    const today = new Date();
+                    const jDate = jalaali.toJalaali(today.getFullYear(), today.getMonth() + 1, today.getDate());
+                    const persianMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+                    document.getElementById('sleepDate').innerText = `${jDate.jd} ${persianMonths[jDate.jm - 1]} ${jDate.jy}`;
+
+                    document.getElementById('sleepModal').style.display = 'block';
+                }
+
+                function closeSleepModal() {
+                    document.getElementById('sleepModal').style.display = 'none';
+                }
+
+                function setSleepQuality(quality) {
+                    document.getElementById('qBad').classList.remove('active');
+                    document.getElementById('qOk').classList.remove('active');
+                    document.getElementById('qGood').classList.remove('active');
+
+                    if (quality === 'bad') document.getElementById('qBad').classList.add('active');
+                    if (quality === 'ok') document.getElementById('qOk').classList.add('active');
+                    if (quality === 'good') document.getElementById('qGood').classList.add('active');
+                }
+
+                function addSleepRecord() {
+                    alert('قابلیت افزودن بازه خواب در نسخه بعدی اضافه می‌شود!');
+                }
+
+                function submitSleep() {
+                    alert('خواب با موفقیت ثبت شد! 🌙');
+                    closeSleepModal();
+                }
+
+                // بستن مودال‌ها با کلیک بیرون از آن‌ها
+                window.onclick = function(event) {
+                    const subModal = document.getElementById('subCategoryModal');
+                    const sleepModal = document.getElementById('sleepModal');
+                    if (event.target == subModal) {
+                        subModal.style.display = 'none';
+                    }
+                    if (event.target == sleepModal) {
+                        sleepModal.style.display = 'none';
+                    }
+                }
+
+                // --- اجرای اولیه ---
+                updateHeaderDate();
+                updateTimerDisplay();
+                fetchTasks().then(() => updateCalendarAndChart());
+    </script>
+</body>
+</html>

@@ -1,0 +1,1016 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700&display=swap');
+
+/* ==================== متغیرهای تم ==================== */
+:root {
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+    --text-main: #2d3436;
+    --text-muted: #636e72;
+    --primary-color: #4a90e2;
+    --primary-hover: #357abd;
+    --border-color: #e1e4e8;
+    --sidebar-bg: #ffffff;
+    --input-bg: #f8f9fa;
+    --shadow: 0 4px 20px rgba(0,0,0,0.04);
+    --stats-bg: #f0f7ff;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-main: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --primary-color: #64b5f6;
+    --primary-hover: #42a5f5;
+    --border-color: #333333;
+    --sidebar-bg: #1e1e1e;
+    --input-bg: #2c2c2c;
+    --shadow: 0 4px 20px rgba(0,0,0,0.3);
+    --stats-bg: #2c2c2c;
+}
+
+/* ==================== پایه ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: var(--text-main);
+}
+
+/* ==================== هدر ==================== */
+.top-header {
+    background: var(--card-bg);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo-area {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.header-right-side {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ویجت تقویم هدر */
+.date-widget {
+    display: flex;
+    align-items: center;
+    background: var(--input-bg);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    transition: 0.3s;
+}
+
+    .date-widget .separator {
+        margin: 0 10px;
+        color: var(--border-color);
+    }
+
+    .date-widget .calendar-icon {
+        margin-right: 10px;
+        font-size: 18px;
+    }
+
+.header-controls {
+    display: flex;
+    gap: 10px;
+}
+
+    .header-controls button {
+        background: var(--input-bg);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+
+        .header-controls button:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+/* ==================== بدنه و سایدبار ==================== */
+.main-wrapper {
+    display: flex;
+    flex: 1;
+}
+
+.sidebar {
+    width: 250px;
+    background: var(--sidebar-bg);
+    padding: 30px 20px;
+    border-left: 1px solid var(--border-color);
+}
+
+    .sidebar ul {
+        list-style: none;
+    }
+
+        .sidebar ul li {
+            padding: 12px 18px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+            .sidebar ul li:hover, .sidebar ul li.active {
+                background: var(--stats-bg);
+                color: var(--primary-color);
+            }
+
+/* ==================== محتوای اصلی ==================== */
+.content-area {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px; /* کمی پهن‌تر برای داشبورد */
+}
+
+h1 {
+    color: var(--text-main);
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* ==================== کارت‌ها ==================== */
+.card, .pomodoro-card, .chart-card, .calendar-card, .highlights-card {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    margin-bottom: 25px;
+}
+
+/* ==================== فرم و آمار ==================== */
+.input-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 14px 18px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-bg);
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+    font-family: inherit;
+    color: var(--text-main);
+}
+
+    input[type="text"]:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    }
+
+button.add-btn {
+    padding: 14px 28px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+    button.add-btn:hover {
+        background-color: var(--primary-hover);
+    }
+
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+    background: var(--stats-bg);
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.stat-item span {
+    font-weight: 800;
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+/* استایل هدف روزانه */
+.target-item {
+    background: var(--card-bg);
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    border: 1px solid var(--primary-color);
+}
+
+/* ==================== لیست تسک‌ها ==================== */
+ul#taskList {
+    list-style: none;
+}
+
+#taskList li {
+    background: var(--card-bg);
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+    #taskList li:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    #taskList li.completed {
+        background: var(--input-bg);
+    }
+
+        #taskList li.completed .task-title {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+.task-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+/* ==================== دکمه‌های عملیات ==================== */
+.actions button {
+    padding: 8px 16px;
+    margin-right: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+    font-family: inherit;
+}
+
+.btn-delete {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+    .btn-delete:hover {
+        background-color: #ef4444;
+        color: white;
+    }
+
+.btn-toggle {
+    background-color: #e0f2fe;
+    color: #0284c7;
+}
+
+    .btn-toggle:hover {
+        background-color: #0284c7;
+        color: white;
+    }
+
+/* دکمه انجام شده سبز */
+#taskList li.completed .btn-toggle {
+    background-color: #dcfce7;
+    color: #16a34a;
+    font-weight: 700;
+}
+
+    #taskList li.completed .btn-toggle:hover {
+        background-color: #16a34a;
+        color: white;
+    }
+
+/* ==================== پومودورو ==================== */
+.pomodoro-card {
+    text-align: center;
+}
+
+    .pomodoro-card h2 {
+        color: var(--text-main);
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    .pomodoro-card p {
+        color: var(--text-muted);
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+.timer-display {
+    font-size: 60px;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-family: monospace;
+}
+
+.timer-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+    .timer-controls button {
+        padding: 12px 30px;
+        border-radius: 10px;
+        font-family: inherit;
+        font-weight: 700;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.2s;
+        border: none;
+    }
+
+.pomo-start {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+    .pomo-start:hover {
+        background-color: var(--primary-hover);
+    }
+
+.pomo-reset {
+    background-color: var(--input-bg);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+}
+
+    .pomo-reset:hover {
+        background-color: var(--border-color);
+    }
+
+/* ==================== تنظیمات ==================== */
+.settings-panel {
+    display: none;
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    margin-bottom: 25px;
+}
+
+    .settings-panel h2 {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: var(--text-main);
+    }
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.color-picker {
+    display: flex;
+    gap: 10px;
+}
+
+.color-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+    .color-btn:hover {
+        border-color: var(--text-main);
+    }
+
+/* ==================== داشبورد (تقویم + مهم‌ترین‌ها) ==================== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* تقویم */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+    .calendar-header h2 {
+        color: var(--text-main);
+        font-size: 18px;
+        margin: 0;
+    }
+
+    .calendar-header button {
+        background: var(--input-bg);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        padding: 5px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+        .calendar-header button:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+#calendar-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.calendar-weekday {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding-bottom: 10px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-main);
+    background-color: var(--input-bg);
+    transition: 0.2s;
+    cursor: default;
+}
+
+    .calendar-day:hover:not(.empty) {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .calendar-day.empty {
+        background: transparent;
+    }
+
+/* رنگ‌های فعالیت (آبی ملایم) */
+.day-active-1 {
+    background-color: #e0f2fe;
+    color: #0284c7;
+}
+
+.day-active-2 {
+    background-color: #bae6fd;
+    color: #0284c7;
+}
+
+.day-active-3 {
+    background-color: #7dd3fc;
+    color: #0369a1;
+}
+
+.day-active-4 {
+    background-color: #38bdf8;
+    color: white;
+}
+
+.day-active-5 {
+    background-color: #0ea5e9;
+    color: white;
+    font-weight: bold;
+}
+
+.calendar-day.friday {
+    color: #ef4444;
+}
+
+/* مهم‌ترین‌ها */
+.highlights-card h2 {
+    font-size: 16px;
+    color: var(--text-main);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+#highlightsList {
+    list-style: none;
+    padding: 0;
+}
+
+    #highlightsList li {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-color);
+        font-size: 14px;
+        color: var(--text-muted);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        #highlightsList li:last-child {
+            border-bottom: none;
+        }
+
+        #highlightsList li span:last-child {
+            font-weight: 700;
+            color: var(--primary-color);
+            background: var(--input-bg);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+/* ==================== نمودار ==================== */
+.chart-card h2 {
+    color: var(--text-main);
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+/* --- ویجت استریک (زنجیره عادت) --- */
+.streak-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.streak-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.streak-text {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-main);
+}
+
+    .streak-text span {
+        color: #1e1e1e; /* رنگ قرمز برای آتش */
+    }
+
+.streak-subtext {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+/* --- استایل دفترچه بولت ژورنال --- */
+.highlights-card {
+    background: #fdfdfd; /* رنگ سفید کاغذی */
+    border: 1px solid #e5e7eb;
+    border-right: 3px solid #ef4444; /* خط قرمز کنار دفترچه */
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+}
+
+[data-theme="dark"] .highlights-card {
+    background: #1e1e1e;
+    border-color: #333;
+    border-right-color: #ef4444;
+}
+
+.highlights-card h2 {
+    font-size: 16px;
+    color: var(--text-main);
+    margin-bottom: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bullet-list {
+    list-style: none;
+    padding: 0;
+}
+
+    .bullet-list li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        font-size: 14px;
+        color: var(--text-muted);
+        border-bottom: 1px dashed #e5e7eb; /* خط چین دفترچه‌ای */
+    }
+
+[data-theme="dark"] .bullet-list li {
+    border-bottom-color: #333;
+}
+
+.bullet-list li:last-child {
+    border-bottom: none;
+}
+
+/* دایره‌های بولت */
+.bullet {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #4b5563; /* دایره توخالی مشکی/خاکستری */
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+    .bullet.filled {
+        background-color: #4b5563; /* دایره پر مشکی */
+        border-color: #4b5563;
+    }
+
+[data-theme="dark"] .bullet {
+    border-color: #d1d5db;
+}
+
+    [data-theme="dark"] .bullet.filled {
+        background-color: #d1d5db;
+        border-color: #d1d5db;
+    }
+
+.task-text {
+    flex: 1;
+}
+
+    .task-text.done {
+        text-decoration: line-through;
+        color: #9ca3af;
+    }
+/* --- بخش دسته‌بندی‌ها --- */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+.category-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+.category-cover {
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+}
+
+.category-info {
+    padding: 15px;
+}
+
+    .category-info h3 {
+        font-size: 16px;
+        margin-bottom: 5px;
+        color: var(--text-main);
+    }
+
+    .category-info p {
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+/* --- استایل Modal --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    margin: 10% auto;
+    padding: 30px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.close-modal {
+    color: var(--text-muted);
+    position: absolute;
+    top: 15px;
+    left: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .close-modal:hover {
+        color: var(--primary-color);
+    }
+
+.modal-body {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+/* دکمه‌های داخل مودال */
+.modal-sub-btn {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: 0.2s;
+    font-family: inherit;
+    color: var(--text-main);
+}
+
+    .modal-sub-btn:hover {
+        background: var(--primary-color);
+        color: white;
+    }
+/* --- دکمه خواب در هدر --- */
+.sleep-widget-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--input-bg);
+    padding: 8px 15px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    transition: 0.3s;
+}
+
+    .sleep-widget-btn:hover {
+        background: #e0f2fe; /* آبی خیلی ملایم */
+        border-color: #7dd3fc;
+    }
+
+.sleep-icon {
+    font-size: 18px;
+}
+
+.sleep-text {
+    font-weight: 700;
+    color: var(--text-main);
+    font-size: 14px;
+}
+
+/* --- مدال خواب --- */
+.sleep-modal-content {
+    max-width: 500px;
+    text-align: center;
+    padding: 25px;
+}
+
+    .sleep-modal-content h2 {
+        font-size: 22px;
+        margin-bottom: 5px;
+        color: var(--text-main);
+    }
+
+.sleep-date {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.sleep-record-box {
+    border: 2px solid #0ea5e9; /* آبی */
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15px;
+    background: #f0f9ff; /* آبی خیلی ملایم */
+}
+
+[data-theme="dark"] .sleep-record-box {
+    background: #082f49;
+    border-color: #38bdf8;
+}
+
+.sleep-record-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    color: #0284c7; /* آبی تیره */
+    margin-bottom: 15px;
+}
+
+[data-theme="dark"] .sleep-record-header {
+    color: #38bdf8;
+}
+
+.sleep-times {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.time-input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+    .time-input-group label {
+        font-size: 13px;
+        color: var(--text-muted);
+    }
+
+.time-display {
+    font-size: 24px;
+    font-weight: 800;
+    background: white;
+    padding: 8px 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    color: var(--text-main);
+}
+
+[data-theme="dark"] .time-display {
+    background: #1e1e1e;
+}
+
+.sleep-quality {
+    margin-top: 15px;
+}
+
+    .sleep-quality label {
+        font-size: 13px;
+        color: var(--text-muted);
+        display: block;
+        margin-bottom: 10px;
+    }
+
+.quality-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+    .quality-buttons button {
+        flex: 1;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        background: white;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: 500;
+        transition: 0.2s;
+    }
+
+[data-theme="dark"] .quality-buttons button {
+    background: #333;
+    color: #ccc;
+}
+
+.quality-buttons button.active {
+    background: #0ea5e9; /* آبی */
+    color: white;
+}
+
+.add-sleep-record-btn {
+    width: 100%;
+    padding: 12px;
+    border: 2px dashed #7dd3fc; /* آبی ملایم */
+    background: transparent;
+    border-radius: 12px;
+    color: #0ea5e9; /* آبی */
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: 0.2s;
+}
+
+    .add-sleep-record-btn:hover {
+        background: #e0f2fe;
+    }
+
+.total-sleep-box {
+    display: flex;
+    justify-content: space-between;
+    background: #e0f2fe; /* آبی ملایم */
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    color: #0284c7; /* آبی تیره */
+    margin-bottom: 20px;
+}
+
+[data-theme="dark"] .total-sleep-box {
+    background: #0c4a6e;
+    color: #38bdf8;
+}
+
+.submit-sleep-btn {
+    width: 100%;
+    padding: 15px;
+    background: #0ea5e9; /* آبی */
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+}
+
+    .submit-sleep-btn:hover {
+        background: #0284c7;
+    }
+
+.no-sleep-text {
+    margin-top: 15px;
+    font-size: 13px;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-decoration: underline;
+}
